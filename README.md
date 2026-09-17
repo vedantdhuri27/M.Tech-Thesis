@@ -192,7 +192,3 @@ framework is original work for this thesis.
 
 Vedant Dhuri — M.Tech Chemical Engineering, IIT Gandhinagar
 Process Modeling, Control, and Optimization Research Group
-
-## License
-
-MIT License (or specify your department's preferred license) — see `LICENSE`.
