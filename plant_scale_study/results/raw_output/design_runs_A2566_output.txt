@@ -1,0 +1,138 @@
+design_runs
+
+######## Temperature 24 C, clarifier 2566 m2 ########
+
+T=24 C, mu_A input 0.4167, clarifier 2566 m2
+ #  |  KLa  | Qintr  |  Qw  | SNH95 | SNHavg |  DO  |  TN95 | TSS95 |  OCI  |  EQI
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 1  | 127.8 |  60300 |  323 |  8.52 |   5.46 | 0.90 |  18.8 |  17.0 | 21777 | 15881
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 2  | 174.3 |  26600 |  243 |  5.53 |   2.87 | 2.22 |  21.1 |  18.3 | 24166 | 13767
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 3  |  93.8 |  87300 |  301 | 13.09 |   9.86 | 0.08 |  19.3 |  17.4 | 19344 | 21073
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 4  | 106.2 |  82200 |  224 |  8.68 |   5.52 | 0.27 |  17.0 |  18.7 | 19160 | 17011
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 5  |  56.9 |  69000 |  184 | 37.83 |  36.25 | 0.00 |  40.9 |  68.7 | 14938 | 61474
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 6  | 136.5 | 105900 |  150 |  6.76 |   3.87 | 0.67 |  14.3 |  28.5 | 19576 | 18643
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 7  | 143.7 |  42400 |  590 | 15.78 |  12.98 | 1.66 |  24.7 |  15.4 | 25281 | 23004
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 8  | 148.9 |  21500 |  155 |  4.94 |   2.53 | 0.96 |  20.4 |  29.1 | 20318 | 17064
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+ 9  |  70.6 |  39900 |  204 | 27.84 |  25.49 | 0.01 |  29.5 |  20.1 | 17281 | 40075
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+10  | 106.9 |  50800 |  268 |  9.08 |   5.83 | 0.26 |  19.1 |  17.9 | 19679 | 16831
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+11  |  78.4 |  23300 |  583 | 29.69 |  27.80 | 0.45 |  33.0 |  15.6 | 20991 | 39803
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+12  | 139.8 |  77000 |  433 | 10.86 |   7.86 | 1.31 |  19.5 |  16.1 | 23696 | 17907
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+13  |  73.4 |  56200 |  459 | 28.64 |  26.50 | 0.09 |  31.2 |  16.2 | 19904 | 38908
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+14  | 166.4 |  45500 |  133 |  5.76 |   2.98 | 0.52 |  16.4 |  52.8 | 20078 | 22041
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+15  |  83.5 |  95900 |  484 | 22.39 |  19.91 | 0.14 |  26.1 |  15.9 | 20617 | 31300
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+16  |  91.0 |  47400 |  380 | 16.59 |  13.50 | 0.09 |  23.4 |  16.7 | 19964 | 24608
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+17  | 157.3 |  93600 |  292 |  7.94 |   4.99 | 1.77 |  17.2 |  17.3 | 23633 | 15638
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+18  | 112.1 |  62500 |  416 | 12.00 |   8.89 | 0.50 |  20.6 |  16.3 | 21597 | 19159
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+19  |  52.2 |  79500 |  475 | 37.92 |  36.48 | 0.00 |  39.1 |  17.1 | 21869 | 49937
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+20  | 116.0 | 109500 |  444 | 13.10 |  10.20 | 0.74 |  19.7 |  16.0 | 22208 | 20509
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+21  |  63.2 |  30000 |  549 | 36.96 |  35.64 | 0.15 |  38.1 |  16.0 | 20360 | 48803
+11     [varargout{1:nargout}] = feval(function_name, varargin{1:end});
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+22  | 179.5 |  71400 |  561 | 13.98 |  11.14 | 2.31 |  22.1 |  15.4 | 27633 | 21047
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+23  | 130.9 |  98300 |  260 |  7.87 |   4.94 | 1.07 |  16.7 |  17.8 | 21348 | 15929
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+24  |  87.6 |  84100 |  384 | 17.72 |  14.78 | 0.08 |  22.7 |  16.6 | 19886 | 26031
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+25  | 123.0 |  54400 |  113 |  7.08 |   3.99 | 0.18 |  15.3 |  66.7 | 15888 | 26495
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+26  |  59.5 |  67000 |  524 | 38.14 |  36.75 | 0.04 |  39.2 |  16.2 | 20466 | 50153
+11     [varargout{1:nargout}] = feval(function_name, varargin{1:end});
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+27  | 150.7 |  89100 |  167 |  6.28 |   3.48 | 1.77 |  16.2 |  20.0 | 21547 | 15625
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+28  | 169.2 | 103000 |  503 | 12.91 |  10.05 | 2.12 |  20.1 |  15.7 | 26460 | 20062
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+29  | 160.3 |  32800 |  333 |  7.15 |   4.17 | 1.75 |  20.9 |  17.0 | 24195 | 14330
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=24.0
+30  | 101.7 |  36400 |  351 | 12.16 |   8.86 | 0.18 |  21.9 |  16.9 | 20292 | 19528
+
+Saved design_runs_T24_A2566.mat
+
+######## Temperature 30 C, clarifier 2566 m2 ########
+
+T=30 C, mu_A input 0.5419, clarifier 2566 m2
+ #  |  KLa  | Qintr  |  Qw  | SNH95 | SNHavg |  DO  |  TN95 | TSS95 |  OCI  |  EQI
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 1  | 127.8 |  60300 |  546 |  7.98 |   5.04 | 0.96 |  18.3 |  15.1 | 22294 | 14360
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 2  | 174.3 |  26600 |  387 |  5.00 |   2.57 | 2.33 |  20.8 |  16.1 | 24576 | 12324
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 3  |  93.8 |  87300 |  501 | 12.06 |   8.72 | 0.08 |  18.3 |  15.4 | 19858 | 18691
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 4  | 106.2 |  82200 |  348 |  8.02 |   4.97 | 0.34 |  16.4 |  16.3 | 19502 | 15300
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 5  |  56.9 |  69000 |  269 | 38.12 |  36.68 | 0.00 |  39.3 |  19.5 | 19126 | 51907
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 6  | 136.5 | 105900 |  200 |  6.01 |   3.37 | 1.55 |  15.3 |  18.6 | 20347 | 15056
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 7  | 143.7 |  42400 | 1081 | 15.76 |  12.87 | 1.65 |  24.5 |  13.7 | 26156 | 21797
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 8  | 148.9 |  21500 |  209 |  4.36 |   2.09 | 1.99 |  21.1 |  18.5 | 21132 | 13463
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+ 9  |  70.6 |  39900 |  308 | 26.52 |  24.15 | 0.00 |  28.0 |  17.5 | 17702 | 37349
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+10  | 106.9 |  50800 |  437 |  8.47 |   5.31 | 0.32 |  18.4 |  15.7 | 20148 | 15136
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+11  |  78.4 |  23300 | 1067 | 28.72 |  26.72 | 0.37 |  32.2 |  13.9 | 21922 | 37292
+11     [varargout{1:nargout}] = feval(function_name, varargin{1:end});
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+12  | 139.8 |  77000 |  767 | 10.50 |   7.49 | 1.31 |  19.1 |  14.3 | 24399 | 16449
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+13  |  73.4 |  56200 |  818 | 27.07 |  24.85 | 0.05 |  29.8 |  14.4 | 20719 | 35798
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+14  | 166.4 |  45500 |  166 |  4.64 |   2.26 | 2.49 |  18.3 |  19.5 | 21948 | 14386
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+15  |  83.5 |  95900 |  868 | 21.15 |  18.47 | 0.11 |  24.9 |  14.2 | 21425 | 28511
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+16  |  91.0 |  47400 |  659 | 15.38 |  12.18 | 0.07 |  22.3 |  14.8 | 20605 | 22006
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+17  | 157.3 |  93600 |  484 |  7.37 |   4.58 | 1.83 |  16.8 |  15.3 | 24089 | 14130
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+18  | 112.1 |  62500 |  731 | 11.39 |   8.26 | 0.50 |  20.0 |  14.4 | 22276 | 17399
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+19  |  52.2 |  79500 |  849 | 37.95 |  36.46 | 0.00 |  39.0 |  14.9 | 22371 | 48569
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+20  | 116.0 | 109500 |  787 | 12.44 |   9.51 | 0.71 |  19.0 |  14.2 | 22924 | 18672
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+21  |  63.2 |  30000 |  999 | 36.15 |  34.87 | 0.14 |  37.3 |  14.1 | 21280 | 46531
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+22  | 179.5 |  71400 | 1022 | 13.84 |  10.99 | 2.27 |  21.8 |  13.8 | 28478 | 19823
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+23  | 130.9 |  98300 |  420 |  7.34 |   4.54 | 1.14 |  16.2 |  15.7 | 21782 | 14392
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+24  |  87.6 |  84100 |  667 | 16.52 |  13.37 | 0.06 |  21.5 |  14.7 | 20547 | 23323
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+25  | 123.0 |  54400 |  126 |  5.92 |   3.11 | 0.37 |  14.7 |  44.9 | 16526 | 21811
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+26  |  59.5 |  67000 |  949 | 37.52 |  36.32 | 0.05 |  38.6 |  14.3 | 21316 | 48275
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+27  | 150.7 |  89100 |  234 |  5.89 |   3.20 | 1.94 |  16.0 |  17.8 | 21680 | 14390
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+28  | 169.2 | 103000 |  907 | 12.55 |   9.68 | 2.08 |  19.7 |  13.9 | 27246 | 18597
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+29  | 160.3 |  32800 |  567 |  6.77 |   3.93 | 1.82 |  20.5 |  15.0 | 24737 | 13026
+[runner] influent S_I mean=49.06 | effluent S_I=49.06 | T mean=30.0
+30  | 101.7 |  36400 |  601 | 11.26 |   7.92 | 0.18 |  21.1 |  14.9 | 20865 | 17394
+
+Saved design_runs_T30_A2566.mat
