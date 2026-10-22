@@ -3,6 +3,18 @@
 
 M.Tech thesis project — Discipline of Chemical Engineering, IIT Gandhinagar.
 
+## Project status (22 Oct 2026)
+
+The thesis now has two studies, and this repository holds both:
+
+| Study | Where | Scale and conditions | Status |
+|---|---|---|---|
+| Reference case | `optimization/`, `init/`, `benchmark/` | BSM1 scale, standard BSM1 influent, 15 °C, decision variables KLa and Qintr (44-run design) | Done, kept as the reference |
+| Plant-scale study | [`plant_scale_study/`](plant_scale_study/README.md) | Anjana WWTP scale (38,485 m³/d), Surat influent, 24 °C and 30 °C, decision variables KLa, Qintr and Qw, clarifier area 1,225 and 2,566 m² | In progress |
+
+The reference case uses the BSM1 reference temperature, which is not a Surat condition, and its optima do not carry over to
+24–30 °C (see Key Results). Controller design (objective 5 below) is planned; its scope is still to be decided.
+
 ## Problem Statement
 
 Wastewater treatment plants (WWTPs) must simultaneously satisfy regulatory
@@ -117,6 +129,8 @@ coefficients β (see `perf_plant.m`).
 
 ## Key Results
 
+### Reference case (BSM1 scale, standard influent, 15 °C, dry weather)
+
 | Operating point | KLa | Qintr (m³/d) | OCI | EQI | Notes |
 |---|---|---|---|---|---|
 | Baseline (Surat-calibrated) | 300 | 9,223 | 31,523.4 | 2,752.0 | Default fixed-aeration operation |
@@ -129,6 +143,23 @@ the baseline while satisfying SNH95 and TN regulatory limits; the Pareto
 front (traced via NSGA-II) was cross-validated against an independent
 epsilon-constraint search and against full nonlinear BSM1 simulations
 (OCI agreement within 0.1%).
+
+These results are for 15 °C. Surat sewage is 23–35 °C (about 24 °C in January and 30 °C on average), and with the nitrifier
+kinetics calibrated to the Anjana plant the 15 °C optima do not transfer. The plant-scale study redoes the analysis at 24 °C and 30 °C.
+
+### Plant-scale study (Anjana scale, 24 °C and 30 °C, dry weather)
+
+Details, scripts and data are in [`plant_scale_study/`](plant_scale_study/README.md).
+
+- Calibration: nitrifier growth rate 0.68 d⁻¹ at 28 °C reproduces the measured effluent ammonia (model 15.2 vs plant 14.7 mg N/L);
+  predicted sludge age 7.2 d vs 7–8 d reported.
+- Clarifier 1,225 m² (inferred): none of 57 simulated runs at 30 °C and none of 45 at 24 °C meet the practical target
+  (average ammonia ≤ 4, TN95 ≤ 18, TSS95 ≤ 30 mg/L) or the strict limits (SNH95 ≤ 4 instead of average ammonia).
+- Clarifier 2,566 m²: 2 of 30 design runs meet the practical target at each temperature; none meet the strict limits. The larger
+  clarifier lowers TSS95 by 13–32 mg/L in every paired run and raises operating cost by about 1,300–1,400 OCI units at the same settings.
+- Response surfaces (leave-one-out R² at 2,566 m², 24 °C / 30 °C): ammonia 0.94–0.95, TN95 0.86 / 0.84, OCI 0.87 / 0.90,
+  solids 0.33 / 0.70 (the weak one).
+- Still to run: infill and hold-out tests at 2,566 m², robustness in rain and storm, and the final cost–quality front.
 
 ## Figures/Plots
 
@@ -158,6 +189,7 @@ benchmark/       Official BSM1 Simulink benchmark files (IWA/COST, see Acknowled
 init/            Plant initialization scripts (calibrated + default reference)
 simulation/      Scripts to run BSM1 to steady state, then dynamic closed loop
 optimization/    RSM fitting, constrained optimum, Pareto front (epsilon-constraint + NSGA-II)
+plant_scale_study/  Plant-scale study at 24 and 30 °C: scripts, results CSV, README
 mpc/             Step-test linearization and closed-loop MPC design/testing
 data/            RSM design points, fitted-model coefficients, Pareto front results
 figures/         Exported plots (response surfaces, Pareto front, validation)
@@ -178,6 +210,7 @@ docs/            Presentation slides / summary documents
    `optimization/gamultiobj_OCI_EQI.m` (NSGA-II, recommended — see Key Results).
 6. For the controller design, run `mpc/step_test_linearization.m` followed by
    `mpc/mpc_closed_loop_test.m`.
+7. For the plant-scale study (24 and 30 °C), see `plant_scale_study/README.md`.
 
 ## Acknowledgments
 
