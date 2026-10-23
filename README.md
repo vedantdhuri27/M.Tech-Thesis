@@ -129,6 +129,44 @@ coefficients β (see `perf_plant.m`).
 
 ## Key Results
 
+### Plant-scale study (Anjana scale, 24 °C and 30 °C, dry weather)
+
+Details, scripts and data are in [`plant_scale_study/`](plant_scale_study/README.md). Limits: SNH95 ≤ 4 mg N/L, TN95 ≤ 18 mg/L,
+TSS95 ≤ 30 mg/L (strict); the practical target uses average ammonia ≤ 4 mg N/L instead of SNH95.
+
+**Calibration.** Nitrifier growth rate 0.68 d⁻¹ at 28 °C reproduces the measured effluent ammonia (model 15.2 vs plant 14.7 mg N/L);
+the predicted sludge age of 7.2 d matches the reported 7–8 d, which was not used in the fit.
+
+**Effect of clarifier area.** The same 30 operating points (KLa, Qintr, Qw) were simulated at two areas:
+
+| Out of 30 runs | 24 °C, 1,225 m² | 24 °C, 2,566 m² | 30 °C, 1,225 m² | 30 °C, 2,566 m² |
+|---|---|---|---|---|
+| TSS95 ≤ 30 | 3 | 27 | 21 | 29 |
+| Ammonia (average) and TN95 within limits | 0 | 4 | 3 | 3 |
+| Practical target met | 0 | 2 | 0 | 2 |
+| Strict limits met | 0 | 0 | 0 | 0 |
+| Median change in SNH95 (mg N/L) | | −1.4 | | −1.0 |
+| Median change in OCI | | +1,412 | | +1,318 |
+
+At 1,225 m² (inferred), none of 57 simulated runs at 30 °C and none of 45 at 24 °C meet the practical target either. The larger
+clarifier lowered TSS95 by 13–32 mg/L in every paired run.
+
+**Design runs that meet the practical target at 2,566 m²** (the same two settings pass at both temperatures):
+
+| Temperature | KLa | Qintr (m³/d) | Qw (m³/d) | SNHavg | TN95 | TSS95 | OCI |
+|---|---|---|---|---|---|---|---|
+| 24 °C | 136.5 | 105,900 | 150 | 3.87 | 14.3 | 28.5 | 19,576 |
+| 24 °C | 150.7 | 89,100 | 167 | 3.48 | 16.2 | 20.0 | 21,547 |
+| 30 °C | 136.5 | 105,900 | 200 | 3.37 | 15.3 | 18.6 | 20,347 |
+| 30 °C | 150.7 | 89,100 | 234 | 3.20 | 16.0 | 17.8 | 21,680 |
+
+These are simulated design points, not optimised ones, and none meets the strict ammonia limit (their SNH95 is 5.9–6.8 mg N/L).
+
+**Response surfaces** (leave-one-out R² at 2,566 m², 24 °C / 30 °C): ammonia 0.94–0.95, TN95 0.86 / 0.84, OCI 0.87 / 0.90,
+solids 0.33 / 0.70. The solids surface is the weak one, so its optima are checked by simulation.
+
+**Still to run:** infill and hold-out tests at 2,566 m², robustness in rain and storm, and the final cost–quality front.
+
 ### Reference case (BSM1 scale, standard influent, 15 °C, dry weather)
 
 | Operating point | KLa | Qintr (m³/d) | OCI | EQI | Notes |
@@ -144,22 +182,9 @@ front (traced via NSGA-II) was cross-validated against an independent
 epsilon-constraint search and against full nonlinear BSM1 simulations
 (OCI agreement within 0.1%).
 
-These results are for 15 °C. Surat sewage is 23–35 °C (about 24 °C in January and 30 °C on average), and with the nitrifier
-kinetics calibrated to the Anjana plant the 15 °C optima do not transfer. The plant-scale study redoes the analysis at 24 °C and 30 °C.
-
-### Plant-scale study (Anjana scale, 24 °C and 30 °C, dry weather)
-
-Details, scripts and data are in [`plant_scale_study/`](plant_scale_study/README.md).
-
-- Calibration: nitrifier growth rate 0.68 d⁻¹ at 28 °C reproduces the measured effluent ammonia (model 15.2 vs plant 14.7 mg N/L);
-  predicted sludge age 7.2 d vs 7–8 d reported.
-- Clarifier 1,225 m² (inferred): none of 57 simulated runs at 30 °C and none of 45 at 24 °C meet the practical target
-  (average ammonia ≤ 4, TN95 ≤ 18, TSS95 ≤ 30 mg/L) or the strict limits (SNH95 ≤ 4 instead of average ammonia).
-- Clarifier 2,566 m²: 2 of 30 design runs meet the practical target at each temperature; none meet the strict limits. The larger
-  clarifier lowers TSS95 by 13–32 mg/L in every paired run and raises operating cost by about 1,300–1,400 OCI units at the same settings.
-- Response surfaces (leave-one-out R² at 2,566 m², 24 °C / 30 °C): ammonia 0.94–0.95, TN95 0.86 / 0.84, OCI 0.87 / 0.90,
-  solids 0.33 / 0.70 (the weak one).
-- Still to run: infill and hold-out tests at 2,566 m², robustness in rain and storm, and the final cost–quality front.
+These results are for 15 °C, the BSM1 reference temperature. Surat sewage is 23–35 °C (about 24 °C in January and 30 °C on
+average), and with the nitrifier kinetics calibrated to the Anjana plant the 15 °C optima do not transfer. The plant-scale study
+above redoes the analysis at 24 °C and 30 °C.
 
 ## Figures/Plots
 
