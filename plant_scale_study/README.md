@@ -23,6 +23,7 @@ influent built by `matlab/calibration/build_surat_influent_v3.m`; replace the in
 | Influent | Rebuilt from the published settled-sewage composition (Lopez-Vazquez et al. 2013, J. Water Sanit. Hyg. Dev. 3(1)); dry, rain and storm profiles from BSM1 |
 | Clarifier | 1,225 m² (inferred, not documented) and 2,566 m² (tested) |
 | Protocol | 100 d constant influent (ode15s), then 14 d dynamic (ode45) |
+| Evaluation | Days 7–14 of the dynamic stage (7 d); SNH95, TN95 and TSS95 are 95th percentiles, SNHavg is flow-weighted |
 | Decision variables | Aeration KLa, internal recycle Qintr, waste sludge flow Qw |
 | Limits | SNH95 ≤ 4 mg N/L, TN95 ≤ 18 mg/L, TSS95 ≤ 30 mg/L (strict). Practical target: average ammonia SNHavg ≤ 4 instead of SNH95 |
 

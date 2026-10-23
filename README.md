@@ -80,9 +80,9 @@ Sludge Model No. 3 (ASM3, Gujer et al., 2000) with 13 state variables per
 reactor (S_O2, S_I, S_S, S_NH4, S_N2, S_NOX, S_ALK, X_I, X_S, X_H, X_STO,
 X_A, X_SS) plus temperature, embedded in the standard 5-reactor
 BSM1 tank-in-series configuration with a 10-layer secondary settler.
-Temperature-dependent kinetic parameters follow an Arrhenius-type
-correction, k(T) = k_20 · θ^(T−20), recalibrated for Indian operating
-temperatures (see `init/` for the specific coefficients used).
+Temperature-dependent kinetic parameters follow the exponential correction
+implemented in `benchmark/asm3.c` (given in full under *Plant-scale study
+formulation* below); `init/` holds the 20 °C parameter values.
 
 **Operational Cost Index (OCI).** Following the BSM1/BSM2 definition, OCI is
 a weighted sum of the plant's energy and sludge-handling costs:
@@ -107,7 +107,7 @@ EQI = (1 / (1000 · T)) · ∫ [ β_TSS·TSS(t) + β_COD·COD(t) + β_BOD·BOD5(
 integrated over the evaluation window T, with standard BSM1 weighting
 coefficients β (see `perf_plant.m`).
 
-**Optimization problems.** With x = (KLa, Qintr):
+**Optimization problems (reference case).** With x = (KLa, Qintr):
 
 - *Single-objective:* `min OCI(x)` s.t. `SNH95(x) ≤ 4`, `TN(x) ≤ 18`,
   `x ∈ [KLa_lb, KLa_ub] × [Qintr_lb, Qintr_ub]`
@@ -115,6 +115,137 @@ coefficients β (see `perf_plant.m`).
   compliance and bound constraints, swept over a range of `EQI_max`
 - *Multi-objective (NSGA-II):* `min [OCI(x), EQI(x)]` s.t. the same
   compliance and bound constraints, solved directly for the Pareto set
+
+### Plant-scale study formulation
+
+The plant-scale study (`plant_scale_study/`) uses the following. Everything here is taken from the scripts in this repository.
+
+**Temperature law and nitrifier calibration.** In `asm3.c` (reactor temperature T from the influent temperature input, `TEMPMODEL = 0`),
+each rate parameter given at 20 °C is corrected as
+
+```
+p(T) = p20 · exp( [ ln(p20 / p10) / 10 ] · (T − 20) )
+```
+
+where p10 is a value hard-coded in the source (μ_A: 0.35, b_A,O2: 0.05, b_A,NOX: 0.02, μ_H: 1.0, b_H,O2: 0.1, b_H,NOX: 0.05,
+k_H: 2, k_STO: 2.5, b_STO,O2: 0.1, b_STO,NOX: 0.05). The slope therefore depends on p20 itself. For nitrifiers, lowering the
+calibrated μ_A flattens its temperature slope (0.105 °C⁻¹ at μ_A = 1.0) while the decay rate keeps its own, so net growth
+(μ_A − b_A) falls as the water warms. The scripts work around this by passing the model the input `p = μ20^(10/(T − 10))`, which
+makes the code return the standard slope:
+
+```
+μ_A(T) = μ20 · exp( s · (T − 20) ),   s = ln(1 / 0.35) / 10 = 0.105 °C⁻¹
+```
+
+Calibration: μ_A(28 °C) = 0.68 d⁻¹ reproduces the measured effluent ammonia, so μ20 = 0.68 · exp(−0.105 · 8) ≈ 0.29 d⁻¹, giving
+about 0.45 d⁻¹ at 24 °C and 0.83 d⁻¹ at 30 °C.
+
+**Sludge age and nitrifier washout.** Sludge age is the solids inventory (reactors plus settler) divided by the solids leaving
+through waste sludge and effluent:
+
+```
+SRT = M_TSS / ( Q_w · X_w + Q_e · X_e )
+```
+
+As a rule of thumb (it ignores substrate saturation), nitrifiers are retained only if the aerobic fraction f_aer of the sludge age
+satisfies `f_aer · ( μ_A(T) − b_A(T) ) ≳ 1 / SRT`. Colder water lowers the left side, so it needs a longer sludge age, that is a smaller Q_w.
+
+**Secondary clarifier.** BSM1 uses a 10-layer settler with the double-exponential settling velocity (`settler1d_asm3.c`):
+
+```
+v_s(X)  = min( v0_max , max( 0 , v0 · [ exp(−r_h (X − f_ns X_f)) − exp(−r_p (X − f_ns X_f)) ] ) )
+v_in = Q_f / A ,   v_up = Q_e / A ,   v_dn = Q_u / A
+J_s,i = v_s(X_i) · X_i                   (settling flux of layer i)
+J_liquid = v_up · X above the feed layer,  v_dn · X below it
+```
+
+The flux passed between two layers is the smaller of their two settling fluxes; above the feed layer, while the lower layer's
+concentration is at most X_t, it is the upper layer's flux. Parameters from `settler1dinit_asm3.m`: v0_max = 250 m/d, v0 = 474 m/d, r_h = 0.000576 m³/g, r_p = 0.00286 m³/g,
+f_ns = 0.00228, X_t = 3000 g/m³, feed layer 5. The clarifier area A enters only through v_in, v_up and v_dn: a larger area lowers the
+overflow velocity and the solids loading, so the same sludge inventory is held back more easily. The study compares A = 1,225 m²
+(inferred) and A = 2,566 m² at a depth of 4 m.
+
+**Evaluation window and effluent statistics.** Each run is 100 d at constant influent, then 14 d of dynamic influent; `perf_plant.m`
+evaluates days 7–14 of the dynamic stage (7 d). With Q_e the effluent flow:
+
+```
+SNHavg = ∫ S_NH,e · Q_e dt / ∫ Q_e dt          (flow-weighted mean)
+SNH95  = 95th percentile of the effluent ammonia S_NH,e(t)
+TN95   = 95th percentile of  S_NO + S_NH + i_NSI S_I + i_NSS S_S + i_NXI X_I + i_NXS X_S + i_NBM (X_H + X_A)
+TSS95  = 95th percentile of the effluent suspended solids
+```
+
+Strict limits: SNH95 ≤ 4 mg N/L, TN95 ≤ 18 mg/L, TSS95 ≤ 30 mg/L. Practical target: SNHavg ≤ 4 in place of SNH95.
+
+**Cost and quality indices as reported by the scripts** (updated BSM1 versions `OCI_new` and `EQ_new` in `perf_plant.m`; T_e = 7 d):
+
+```
+OCI = 5·SP + AE + ME + PE + 3·EC                           (EC = 0: no external carbon)
+AE  = (1 / (1.8·1000·T_e)) ∫ Σ_i S_O,sat,i · V_i · KLa_i(t) dt                         [kWh/d]
+PE  = (1 / T_e) ∫ ( 0.004·Q_intr + 0.008·Q_r + 0.05·Q_w ) dt                            [kWh/d]
+ME  = 24 · 0.005 · Σ_i V_i · (fraction of time with KLa_i < 20 d⁻¹)                     [kWh/d]
+SP  = ( ∫ Q_w X_w dt + change in solids inventory of reactors and settler ) / T_e       [kg TSS/d]
+EQ  = (1 / (1000·T_e)) ∫ ( 2·TSS_e + COD_e + 30·TKN_e + 10·S_NO,e + 2·BOD5_e ) · Q_e dt
+```
+
+**Decision variables.** x = (KLa, Qintr, Qw), with the same KLa in the three aerobic tanks (3 to 5):
+
+| | KLa (d⁻¹) | Qintr (m³/d) | Qw (m³/d) |
+|---|---|---|---|
+| 24 °C | 50–180 | 20,000–110,000 | 100–600 |
+| 30 °C | 50–180 | 20,000–110,000 | 100–1,100 |
+
+**Response surfaces.** Variables are coded u = (x − lo) / (hi − lo) with the bounds above. For each response y:
+
+```
+y' = β0 + Σ β_i u_i + Σ β_ii u_i² + Σ_{i<j} β_ij u_i u_j
+```
+
+with y' = √y for SNH95, SNHavg and TN95 (chosen when it predicts better in leave-one-out), y' = y for OCI and EQI, and y' = ln y for
+TSS95 using whichever of three forms predicts best: (1) quadratic in (KLa, Qintr, Qw); (2) quadratic in (KLa, Qintr, 1/Qw), since sludge
+age goes as 1/Qw; (3) a linear model in [v, v², v³, κ, κ², κ·v] with v the coded 1/Qw and κ the coded KLa. Validation uses the
+leave-one-out statistic, computed on the original scale for ammonia, TN95, OCI and EQI and on the log scale for TSS95:
+
+```
+Q² = 1 − PRESS / SS_tot ,    PRESS = Σ ( e_i / (1 − h_ii) )²
+```
+
+where e_i is the residual and h_ii the leverage of run i. Prediction uncertainty for a new run is the regression standard error s(x),
+widened by `infl = max(1, LOO RMSE / in-sample RMSE)` so that it reflects how well the surface predicts runs it has not seen.
+
+**Constrained optimum with a safety margin.** For a margin of k standard errors (`dfo_solve.m`, `fmincon` SQP from random starts):
+
+```
+strict (A):     min OCI(x)   s.t.  ŷ_j(x) + k·s_j(x) ≤ L_j   for j ∈ {SNH95, TN95, TSS95}
+practical (D):  min OCI(x)   s.t.  same, with SNHavg in place of SNH95
+lowest ammonia (G):  min SNH95(x)   s.t.  TN95 and TSS95 constraints,    x ∈ [lo, hi]
+```
+
+The objective is always the nominal prediction. If no point is feasible (modes B and E), the point minimising the worst relative violation
+`max_j ( ŷ_j + k·s_j − L_j ) / L_j` is returned. The cost–ammonia front (`compare_area.m`) is `gamultiobj` on [OCI(x), SNH95(x)]
+with the TSS95 and TN95 constraints held.
+
+**Experimental design and infill.** The design is a maximin Latin hypercube of N = 30 points in the coded cube, chosen to maximise the
+smallest distance between any two points:
+
+```
+max over designs U :   min_{i ≠ j} || u_i − u_j ||
+```
+
+Infill points (`opt_margin.m`) are the margin optima plus maximin-spaced points in the region where the surfaces are uncertain near
+the limits. Before refitting, the surfaces fitted without the newest infill runs predict them (hold-out test): bias, RMS error and R²
+on the unseen runs are reported.
+
+**Robustness.** For a chosen x and the scenario set S = { dry, rain, storm, μ_A × 0.8, μ_A × 1.2 } (`robust_check.m`), the worst case is
+
+```
+g_j^max(x) = max over s ∈ S of  g_j(x, s) ,     robust if  g_j^max(x) ≤ L_j  for every limit j
+```
+
+**Planned or optional extensions (not implemented).** (a) An annualised clarifier capital cost, `C_cap = c_A · A · CRF`, to compare with
+the OCI change when A grows; (b) temperature-dependent oxygen saturation S_O,sat(T) and KLa(T) = KLa,20 · θ^(T−20), which are constant or
+commented out in the model today; (c) temperature as a fourth variable, y = f(KLa, Qintr, Qw, T), fitted on 24, 30 and 35 °C; (d) a
+state-space model `x_{k+1} = A x_k + B u_k + E d_k` for aeration control, if a PI loop or MPC is built.
 
 ## Software/Toolboxes Used
 
